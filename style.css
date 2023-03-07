@@ -1,6 +1,6 @@
 :root {
     --game: green;
-    --canvas: greenyellow;
+    --canvas: rgb(0, 159, 222);
     --controls: black;
 }
 
