@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#canvas {
+    background-color: greenyellow;
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+#controls {
+    position: fixed;
+    bottom: 0;
+    top: 70dvh;
+    background-color: black;
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+
+#controls > div {
+    aspect-ratio: 1;
+    height: 100%;
+    display: grid;
+    gap: 1rem;
+    grid-template-areas: 
+        ". . . ."
+        ". up up ."
+        "left left right right"
+        ". down down ."
+        ". . . .";
+}
+
+#btn1 {
+    grid-area: up;
+}
+
+#btn2 {
+    grid-area: left;
+}
+
+#btn3 {
+    grid-area: right;
+}
+
+#btn4 {
+    grid-area: down;
+}
+
+
+
+
+
+
+@media screen and (min-width: 768px) {
+    body {
+        background-color: blue;
+    }
+}
