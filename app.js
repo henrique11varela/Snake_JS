@@ -10,51 +10,58 @@ const elements = {
 
 elements.canvas.width = elements.rect.width;
 elements.canvas.height = elements.rect.height;
-let score = 0;
+let framerate = 5;
+let nextFrame = 1000 / framerate;
 let snake = new Snake(20, "rgb(0, 255, 0)", "rgb(255, 0, 0)");
 snake.draw(elements.ctx);
 
-function notify() {
-    snake.update(elements.ctx);
-    snake.draw(elements.ctx);
-}
-
 //KEYBOARD
 window.addEventListener("keydown", (event) => {
-    if (event.key === "w" || event.key === "ArrowUp") {
+    if ((event.key === "w" || event.key === "ArrowUp") && snake.directionOld != "D") {
         snake.direction = "U";
     }
-    else if (event.key === "a" || event.key === "ArrowLeft") {
+    else if ((event.key === "a" || event.key === "ArrowLeft") && snake.directionOld != "R") {
         snake.direction = "L";
     }
-    else if (event.key === "d" || event.key === "ArrowRight") {
+    else if ((event.key === "d" || event.key === "ArrowRight") && snake.directionOld != "L") {
         snake.direction = "R";
     }
-    else if (event.key === "s" || event.key === "ArrowDown") {
+    else if ((event.key === "s" || event.key === "ArrowDown") && snake.directionOld != "U") {
         snake.direction = "D";
     }
 });
 
 //TOUCH CONTROLS
 elements.buttonUp.addEventListener("click", () => {
-    snake.direction = "U";
+    if (snake.directionOld != "D") {
+        snake.direction = "U";
+    }
 });
 elements.buttonLeft.addEventListener("click", () => {
-    snake.direction = "L";
+    if (snake.directionOld != "R") {
+        snake.direction = "L";
+    }
 });
 elements.buttonRight.addEventListener("click", () => {
-    snake.direction = "R";
+    if (snake.directionOld != "L") {
+        snake.direction = "R";
+    }
 });
 elements.buttonDown.addEventListener("click", () => {
-    snake.direction = "D";
+    if (snake.directionOld != "U") {
+        snake.direction = "D";
+    }
 });
 
 //DIFICULTY UP
-let framerate = 5;
-let nextFrame = 1000 / framerate;
 function difficultyUp() {
     framerate++;
     nextFrame = 1000 / framerate;
+}
+
+function notify() {
+    snake.update(elements.ctx);
+    snake.draw(elements.ctx);
 }
 
 //LOOP
@@ -71,6 +78,6 @@ function animate(timeStamp) {
     }
     window.requestAnimationFrame(animate);
 }
-animate(0);
 
+animate(0);
 notify();

@@ -1,3 +1,6 @@
+// TODO: check food coords with snake
+// TODO: snake colisions
+
 class Snake {
     constructor(resolution, snakeColor, foodColor) {
         this.resolution = resolution;
@@ -5,8 +8,9 @@ class Snake {
         this.foodColor = foodColor;
         this.headX = Math.floor(resolution / 2);
         this.headY = Math.floor(resolution / 2);
-        this.body = [new Pixel(this.headX, this.headY, this, this.snakeColor), new Pixel(this.headX, this.headY, this, this.snakeColor)];
+        this.body = [new Pixel(this.headX, this.headY, this, this.snakeColor), new Pixel(this.headX, this.headY + 1, this, this.snakeColor)];
         this.direction = "U"; // U L R D
+        this.directionOld = "U"; // U L R D
         this.speed = 10;
         this.score = 0;
         this.food = new Pixel(Math.floor(Math.random() * this.resolution), Math.floor(Math.random() * this.resolution), this, this.foodColor);
@@ -17,6 +21,7 @@ class Snake {
     }
 
     update(context) {
+        this.directionOld = this.direction;
         //Direction
         if (this.direction == "U") {
             this.headY--;
@@ -47,7 +52,11 @@ class Snake {
         }
         else {
             this.food = new Pixel(Math.floor(Math.random() * this.resolution), Math.floor(Math.random() * this.resolution), this, this.foodColor);
-            difficultyUp();
+            /* difficultyUp(); */
+            this.score++;
+            if (this.score % 5 == 0) {
+                difficultyUp();
+            }
         }
     }
 
@@ -57,5 +66,14 @@ class Snake {
             element.draw(context);
         });
         this.food.draw(context);
+    }
+
+    compare(p) {
+        this.body.forEach((part) => {
+            if (p.X == part.X && p.Y == part.Y) {
+                return true;
+            }
+        });
+        return false;
     }
 }
